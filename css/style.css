@@ -1,0 +1,66 @@
+/* ===== ESTILOS PERSONALIZADOS ===== */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+}
+
+/* Portada */
+.cover-photo {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=1600');
+    background-size: cover;
+    background-position: center 35%;
+}
+
+/* Fotos de perfil */
+.profile-pic {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.3s ease;
+}
+.profile-pic:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.3);
+}
+
+/* Pestañas */
+.tab-active {
+    border-bottom: 3px solid #c6a43b;
+    color: #c6a43b;
+    font-weight: 600;
+}
+.tab-link {
+    transition: all 0.2s;
+}
+
+/* Colores auxiliares */
+.text-gold {
+    color: #c6a43b;
+}
+.border-gold {
+    border-color: #c6a43b;
+}
+.bg-gold-light {
+    background-color: #fef7e8;
+}
+
+/* Efectos hover en tarjetas */
+.hover-scale {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-scale:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
+}
+
+/* Galería de imágenes */
+.gallery-img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.gallery-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 25px -8px rgba(0,0,0,0.2);
+}
+
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
+}

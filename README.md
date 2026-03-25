@@ -14,3 +14,10 @@ Sitio web conmemorativo para Luis Angel Jimenez Escalona y Eilerys Adriana Reyna
 3. Para publicar en GitHub Pages, sube la carpeta completa a un repositorio y activa GitHub Pages desde la configuración.
 
 ## 📁 Estructura
+luis-eilerys-web/
+├── index.html
+├── README.md
+├── css/
+│ └── style.css
+└── js/
+└── script.js

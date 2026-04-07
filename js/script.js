@@ -224,3 +224,49 @@ function aplicarAnimacionTitulo() {
         title.classList.add('title-animated');
     }, 4000);
 }
+
+// ===== CONTADOR DE TIEMPO JUNTOS (desde 24 de enero de 2025) =====
+function actualizarContadorTiempo() {
+    const contadorEl = document.getElementById('contadorTiempo');
+    if (!contadorEl) return;
+    
+    const fechaInicio = new Date('2025-01-24T00:00:00');
+    const ahora = new Date();
+    
+    let diferencia = ahora - fechaInicio;
+    
+    if (diferencia < 0) {
+        contadorEl.textContent = 'Pronto juntos';
+        return;
+    }
+    
+    const segundosTotales = Math.floor(diferencia / 1000);
+    const minutosTotales = Math.floor(segundosTotales / 60);
+    const horasTotales = Math.floor(minutosTotales / 60);
+    const diasTotales = Math.floor(horasTotales / 24);
+    
+    const anios = Math.floor(diasTotales / 365);
+    const diasRestantesAnio = diasTotales % 365;
+    const meses = Math.floor(diasRestantesAnio / 30);
+    const dias = diasRestantesAnio % 30;
+    
+    const horas = horasTotales % 24;
+    const minutos = minutosTotales % 60;
+    const segundos = segundosTotales % 60;
+    
+    let texto = '';
+    
+    if (anios > 0) {
+        texto += `${anios} año${anios > 1 ? 's' : ''}, `;
+    }
+    if (meses > 0 || anios > 0) {
+        texto += `${meses} mes${meses !== 1 ? 'es' : ''}, `;
+    }
+    texto += `${dias} día${dias !== 1 ? 's' : ''}, `;
+    texto += `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+    
+    contadorEl.textContent = `Juntos desde hace: ${texto}`;
+}
+
+// Actualizar el contador cada segundo
+setInterval(actualizarContadorTiempo, 1000);

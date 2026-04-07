@@ -20,45 +20,57 @@ window.cambiarTab = function(tab) {
     tabActual = tab;
 };
 
-// ---------- CONTADOR DE VISITAS POR IP ----------
-let visitas = 0;
-
-async function obtenerIP() {
-    try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-    } catch (error) {
-        console.error("Error al obtener IP:", error);
-        return 'unknown';
-    }
-}
-
+// ---------- CONTADOR DE VISITAS BASADO EN IP CON COUNTAPI ----------
 async function cargarContadorVisitas() {
-    const ip = await obtenerIP();
-    const visitKey = `visita_ip_${ip}`;
-    const today = new Date().toDateString();
-    
-    // Verificar si esta IP ya visitó hoy
-    const lastVisit = localStorage.getItem(visitKey);
-    
-    // Siempre obtenemos el contador global del servidor (simulado aquí con localStorage para demo, 
-    // pero en producción deberías llamar a una API externa para el total real)
-    // Para este ejemplo estático, usaremos un contador global en localStorage + validación por IP local
-    let totalVisitas = parseInt(localStorage.getItem("visitas_totales_globales") || "0", 10);
-
-    if (lastVisit !== today) {
-        // Nueva visita única por IP hoy
-        totalVisitas++;
-        localStorage.setItem("visitas_totales_globales", totalVisitas.toString());
-        localStorage.setItem(visitKey, today);
-    }
-    
-    visitas = totalVisitas;
-    
     const counterEl = document.getElementById("visitCounter");
-    if (counterEl) {
-        counterEl.textContent = visitas;
+    if (!counterEl) return;
+
+    try {
+        // 1. Obtener la IP del visitante usando ipify
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        if (!ipResponse.ok) throw new Error("No se pudo obtener la IP");
+        
+        const ipData = await ipResponse.json();
+        const userIP = ipData.ip;
+        
+        // 2. Crear una clave única basada en la IP para este sitio
+        const storageKey = `visited_luis_eilerys_${userIP.replace(/[^a-zA-Z0-9]/g, '_')}`;
+        const today = new Date().toDateString();
+        
+        // 3. Verificar si esta IP ya visitó el sitio hoy
+        const lastVisit = localStorage.getItem(storageKey);
+        const isNewVisit = (lastVisit !== today);
+        
+        // Namespace y key para CountAPI
+        const namespace = "luis-eilerys-site";
+        const key = "visitas-totales";
+        
+        let visitas;
+        
+        if (isNewVisit) {
+            // Es una nueva visita hoy: incrementamos el contador global
+            localStorage.setItem(storageKey, today);
+            
+            const response = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+            if (!response.ok) throw new Error("Error al incrementar contador");
+            
+            const data = await response.json();
+            visitas = data.value;
+        } else {
+            // Ya visitó hoy: solo leemos el valor actual sin incrementar
+            const response = await fetch(`https://api.countapi.xyz/get/${namespace}/${key}`);
+            if (!response.ok) throw new Error("Error al leer contador");
+            
+            const data = await response.json();
+            visitas = data.value;
+        }
+        
+        // Mostrar el contador
+        counterEl.textContent = visitas.toLocaleString();
+        
+    } catch (error) {
+        console.error("Error en el contador de visitas por IP:", error);
+        counterEl.textContent = "---";
     }
 }
 

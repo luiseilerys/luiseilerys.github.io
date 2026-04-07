@@ -15,6 +15,115 @@ body {
     font-family: 'Great Vibes', cursive;
 }
 
+/* ===== CONTADOR DE TIEMPO REFINADO ===== */
+.time-counter-wrapper {
+    display: inline-block;
+}
+
+.time-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 8px 14px;
+    text-align: center;
+    min-width: 70px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.time-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.time-card-small {
+    min-width: 55px;
+    padding: 8px 10px;
+}
+
+.time-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
+}
+
+.time-card-small .time-value {
+    font-size: 1.2rem;
+}
+
+.time-seconds {
+    color: #ffd700;
+    animation: pulseSeconds 1s ease-in-out infinite;
+}
+
+@keyframes pulseSeconds {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+.time-label {
+    display: block;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.time-label i {
+    margin-right: 2px;
+    font-size: 0.6rem;
+}
+
+.time-separator {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin: 0 2px;
+}
+
+@media (max-width: 768px) {
+    .time-card {
+        min-width: 55px;
+        padding: 6px 10px;
+        border-radius: 8px;
+    }
+    
+    .time-card-small {
+        min-width: 45px;
+        padding: 6px 8px;
+    }
+    
+    .time-value {
+        font-size: 1.1rem;
+    }
+    
+    .time-card-small .time-value {
+        font-size: 0.95rem;
+    }
+    
+    .time-label {
+        font-size: 0.55rem;
+    }
+    
+    .time-separator {
+        font-size: 1rem;
+        margin: 0 1px;
+    }
+}
+
 /* Decorative Divider - Ornamental */
 .ornamental-divider {
     text-align: center;
@@ -247,5 +356,25 @@ html {
     }
     to {
         text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3);
+    }
+}
+
+/* ===== ANIMACIÓN FLIP PARA EL CONTADOR ===== */
+.counter-flip {
+    animation: counterFlip 0.3s ease-in-out;
+}
+
+@keyframes counterFlip {
+    0% {
+        transform: rotateX(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: rotateX(-90deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotateX(0deg);
+        opacity: 1;
     }
 }

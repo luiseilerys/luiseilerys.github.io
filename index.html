@@ -72,10 +72,56 @@
                 <h1 id="mainTitle" class="text-4xl md:text-6xl romantic-font text-white drop-shadow-lg typewriter-container">
                     <span class="typewriter-text">Luis & Eilerys</span>
                 </h1>
-                <p class="text-white text-base md:text-xl font-medium drop-shadow">
-                    <span id="contadorTiempo">Juntos desde hace +5 años</span> · Casados
+                
+                <!-- Contador de tiempo refinado -->
+                <div class="mt-3 flex flex-wrap items-center gap-2 md:gap-3">
+                    <div class="time-counter-wrapper">
+                        <div class="time-card">
+                            <span id="counterYears" class="time-value">0</span>
+                            <span class="time-label"><i class="fas fa-calendar"></i> Años</span>
+                        </div>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-counter-wrapper">
+                        <div class="time-card">
+                            <span id="counterMonths" class="time-value">0</span>
+                            <span class="time-label"><i class="fas fa-moon"></i> Meses</span>
+                        </div>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-counter-wrapper">
+                        <div class="time-card">
+                            <span id="counterDays" class="time-value">0</span>
+                            <span class="time-label"><i class="fas fa-sun"></i> Días</span>
+                        </div>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-counter-wrapper">
+                        <div class="time-card time-card-small">
+                            <span id="counterHours" class="time-value">00</span>
+                            <span class="time-label"><i class="fas fa-clock"></i> Horas</span>
+                        </div>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-counter-wrapper">
+                        <div class="time-card time-card-small">
+                            <span id="counterMinutes" class="time-value">00</span>
+                            <span class="time-label">Min</span>
+                        </div>
+                    </div>
+                    <span class="time-separator">:</span>
+                    <div class="time-counter-wrapper">
+                        <div class="time-card time-card-small">
+                            <span id="counterSeconds" class="time-value time-seconds">00</span>
+                            <span class="time-label">Seg</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-white/90 text-sm md:text-base max-w-xs mt-2 flex items-center gap-2">
+                    <i class="fas fa-heart text-red-300 animate-pulse"></i>
+                    <span>Amor, complicidad y sueños compartidos · Casados</span>
                 </p>
-                <p class="text-white/90 text-sm md:text-base max-w-xs mt-1">Amor, complicidad y sueños compartidos.</p>
             </div>
         </div>
 

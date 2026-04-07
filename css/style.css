@@ -4,6 +4,11 @@ body {
     background-color: #f9fafb;
 }
 
+/* Tipografía romántica para nombres */
+.romantic-font {
+    font-family: 'Great Vibes', cursive;
+}
+
 /* Portada */
 .cover-photo {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=1600');

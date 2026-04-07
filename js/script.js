@@ -20,6 +20,24 @@ window.cambiarTab = function(tab) {
     tabActual = tab;
 };
 
+// ---------- CONTADOR DE VISITAS ----------
+let visitas = 0;
+
+function cargarContadorVisitas() {
+    const stored = localStorage.getItem("visitas_luis_eilerys");
+    if (stored) {
+        visitas = parseInt(stored, 10);
+    }
+    // Incrementar visita actual
+    visitas++;
+    localStorage.setItem("visitas_luis_eilerys", visitas.toString());
+    
+    const counterEl = document.getElementById("visitCounter");
+    if (counterEl) {
+        counterEl.textContent = visitas;
+    }
+}
+
 // ---------- GUESTBOOK CON LOCALSTORAGE ----------
 let mensajes = [];
 
@@ -91,6 +109,7 @@ function guardarMensaje(nombre, mensaje, email) {
 document.addEventListener("DOMContentLoaded", function() {
     cambiarTab(0);
     cargarMensajes();
+    cargarContadorVisitas();
     
     // Formulario de mensajes
     const form = document.getElementById("guestbookForm");

@@ -20,45 +20,36 @@ window.cambiarTab = function(tab) {
     tabActual = tab;
 };
 
-// ---------- CONTADOR DE VISITAS POR IP ----------
+// ---------- CONTADOR DE VISITAS CON COUNTAPI ----------
 let visitas = 0;
 
-async function obtenerIP() {
-    try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-    } catch (error) {
-        console.error("Error al obtener IP:", error);
-        return 'unknown';
-    }
-}
-
 async function cargarContadorVisitas() {
-    const ip = await obtenerIP();
-    const visitKey = `visita_ip_${ip}`;
-    const today = new Date().toDateString();
+    const namespace = "luis-eilerys-site";
+    const key = "visitas-totales";
     
-    // Verificar si esta IP ya visitó hoy
-    const lastVisit = localStorage.getItem(visitKey);
-    
-    // Siempre obtenemos el contador global del servidor (simulado aquí con localStorage para demo, 
-    // pero en producción deberías llamar a una API externa para el total real)
-    // Para este ejemplo estático, usaremos un contador global en localStorage + validación por IP local
-    let totalVisitas = parseInt(localStorage.getItem("visitas_totales_globales") || "0", 10);
-
-    if (lastVisit !== today) {
-        // Nueva visita única por IP hoy
-        totalVisitas++;
-        localStorage.setItem("visitas_totales_globales", totalVisitas.toString());
-        localStorage.setItem(visitKey, today);
-    }
-    
-    visitas = totalVisitas;
-    
-    const counterEl = document.getElementById("visitCounter");
-    if (counterEl) {
-        counterEl.textContent = visitas;
+    try {
+        // CountAPI incrementa y devuelve el valor actual en una sola llamada
+        // Usamos 'hit' para incrementar el contador
+        const response = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+        
+        if (!response.ok) {
+            throw new Error("Error en la respuesta de CountAPI");
+        }
+        
+        const data = await response.json();
+        visitas = data.value;
+        
+        const counterEl = document.getElementById("visitCounter");
+        if (counterEl) {
+            counterEl.textContent = visitas;
+        }
+    } catch (error) {
+        console.error("Error al cargar el contador de visitas:", error);
+        // Valor por defecto si falla la API
+        const counterEl = document.getElementById("visitCounter");
+        if (counterEl) {
+            counterEl.textContent = "---";
+        }
     }
 }
 

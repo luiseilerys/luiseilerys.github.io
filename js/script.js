@@ -227,17 +227,16 @@ function aplicarAnimacionTitulo() {
 
 // ===== CONTADOR DE TIEMPO JUNTOS (desde 24 de enero de 2025) =====
 function actualizarContadorTiempo() {
+    const contadorEl = document.getElementById('contadorTiempo');
+    if (!contadorEl) return;
+    
     const fechaInicio = new Date('2025-01-24T00:00:00');
     const ahora = new Date();
     
     let diferencia = ahora - fechaInicio;
     
     if (diferencia < 0) {
-        // Si aún no ha comenzado, mostrar mensaje
-        ['counterYears', 'counterMonths', 'counterDays', 'counterHours', 'counterMinutes', 'counterSeconds'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = '00';
-        });
+        contadorEl.textContent = 'Pronto juntos';
         return;
     }
     
@@ -255,35 +254,18 @@ function actualizarContadorTiempo() {
     const minutos = minutosTotales % 60;
     const segundos = segundosTotales % 60;
     
-    // Actualizar cada elemento individualmente con animación
-    updateCounterElement('counterYears', anios);
-    updateCounterElement('counterMonths', meses);
-    updateCounterElement('counterDays', dias);
-    updateCounterElement('counterHours', horas, true);
-    updateCounterElement('counterMinutes', minutos, true);
-    updateCounterElement('counterSeconds', segundos, true);
-}
-
-// Función auxiliar para actualizar elementos del contador con animación
-function updateCounterElement(elementId, value, padZero = false) {
-    const element = document.getElementById(elementId);
-    if (!element) return;
+    let texto = '';
     
-    const newValue = padZero ? String(value).padStart(2, '0') : value.toString();
-    
-    // Solo actualizar si el valor ha cambiado
-    if (element.textContent !== newValue) {
-        // Añadir clase de animación
-        element.classList.add('counter-flip');
-        
-        // Actualizar el valor
-        element.textContent = newValue;
-        
-        // Remover la clase de animación después de que termine
-        setTimeout(() => {
-            element.classList.remove('counter-flip');
-        }, 300);
+    if (anios > 0) {
+        texto += `${anios} año${anios > 1 ? 's' : ''}, `;
     }
+    if (meses > 0 || anios > 0) {
+        texto += `${meses} mes${meses !== 1 ? 'es' : ''}, `;
+    }
+    texto += `${dias} día${dias !== 1 ? 's' : ''}, `;
+    texto += `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+    
+    contadorEl.textContent = `Juntos desde hace: ${texto}`;
 }
 
 // Actualizar el contador cada segundo

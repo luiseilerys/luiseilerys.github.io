@@ -146,6 +146,8 @@ document.addEventListener("DOMContentLoaded", function() {
     cambiarTab(0);
     cargarMensajes();
     cargarContadorVisitas();
+    iniciarLluviaPetalos();
+    aplicarAnimacionTitulo();
     
     // Formulario de mensajes
     const form = document.getElementById("guestbookForm");
@@ -174,3 +176,51 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+// ===== LLUVIA DE PÉTALOS/CORAZONES =====
+function iniciarLluviaPetalos() {
+    const container = document.getElementById('fallingContainer');
+    if (!container) return;
+
+    const emojis = ['🌸', '🌹', '💖', '💕', '🌺', '💗', '🌷', '💓', '🌻', '💝'];
+    
+    // Crear un nuevo elemento cada 300ms
+    setInterval(() => {
+        const item = document.createElement('div');
+        item.className = 'falling-item';
+        
+        // Emoji aleatorio
+        item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // Posición horizontal aleatoria
+        item.style.left = Math.random() * 100 + '%';
+        
+        // Tamaño aleatorio (entre 15px y 30px)
+        const size = Math.random() * 15 + 15;
+        item.style.fontSize = size + 'px';
+        
+        // Duración de caída aleatoria (entre 4s y 8s)
+        const duration = Math.random() * 4 + 4;
+        item.style.animationDuration = duration + 's';
+        
+        // Opacidad aleatoria
+        item.style.opacity = Math.random() * 0.5 + 0.3;
+        
+        container.appendChild(item);
+        
+        // Eliminar el elemento después de que termine la animación
+        setTimeout(() => {
+            item.remove();
+        }, duration * 1000);
+    }, 300);
+}
+
+// ===== ANIMACIÓN DE ESCRITURA PARA EL TÍTULO =====
+function aplicarAnimacionTitulo() {
+    const title = document.getElementById('mainTitle');
+    if (!title) return;
+    
+    // Después de que termine la animación CSS, añadir efecto glow
+    setTimeout(() => {
+        title.classList.add('title-animated');
+    }, 4000);
+}

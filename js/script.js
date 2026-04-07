@@ -20,17 +20,41 @@ window.cambiarTab = function(tab) {
     tabActual = tab;
 };
 
-// ---------- CONTADOR DE VISITAS ----------
+// ---------- CONTADOR DE VISITAS POR IP ----------
 let visitas = 0;
 
-function cargarContadorVisitas() {
-    const stored = localStorage.getItem("visitas_luis_eilerys");
-    if (stored) {
-        visitas = parseInt(stored, 10);
+async function obtenerIP() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error("Error al obtener IP:", error);
+        return 'unknown';
     }
-    // Incrementar visita actual
-    visitas++;
-    localStorage.setItem("visitas_luis_eilerys", visitas.toString());
+}
+
+async function cargarContadorVisitas() {
+    const ip = await obtenerIP();
+    const visitKey = `visita_ip_${ip}`;
+    const today = new Date().toDateString();
+    
+    // Verificar si esta IP ya visitó hoy
+    const lastVisit = localStorage.getItem(visitKey);
+    
+    // Siempre obtenemos el contador global del servidor (simulado aquí con localStorage para demo, 
+    // pero en producción deberías llamar a una API externa para el total real)
+    // Para este ejemplo estático, usaremos un contador global en localStorage + validación por IP local
+    let totalVisitas = parseInt(localStorage.getItem("visitas_totales_globales") || "0", 10);
+
+    if (lastVisit !== today) {
+        // Nueva visita única por IP hoy
+        totalVisitas++;
+        localStorage.setItem("visitas_totales_globales", totalVisitas.toString());
+        localStorage.setItem(visitKey, today);
+    }
+    
+    visitas = totalVisitas;
     
     const counterEl = document.getElementById("visitCounter");
     if (counterEl) {
